@@ -6,17 +6,10 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import * as reactNative from 'react-native'; 
+
+
 
 import {
   Colors,
@@ -26,13 +19,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const Section = ({children, title}) => {
+  const isDarkMode = reactNative.useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
+    <reactNative.View style={styles.sectionContainer}>
+      <reactNative.Text
         style={[
           styles.sectionTitle,
           {
@@ -40,8 +34,8 @@ const Section = ({children, title}): Node => {
           },
         ]}>
         {title}
-      </Text>
-      <Text
+      </reactNative.Text>
+      <reactNative.Text
         style={[
           styles.sectionDescription,
           {
@@ -49,26 +43,58 @@ const Section = ({children, title}): Node => {
           },
         ]}>
         {children}
-      </Text>
-    </View>
+      </reactNative.Text>
+    </reactNative.View>
   );
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  const isDarkMode = reactNative.useColorScheme() === 'dark';
+  const [arrayNFT, setarrayNFT] = useState([]);
+  const [isLoading, setisLoading ]=useState(false);
+
+  const itemR = ({Item}) => (
+    <reactNative.Text>{Item[0].creator_name}</reactNative.Text>
+  )
+  
+  useEffect(()=>{
+    getNFT();
+  },[])
+  const getNFT = () => {
+    setisLoading(true);
+    let URL = 'https://631b5df3fae3df4dcffcf52e.mockapi.io/api/v1/items?page=1&limit=10';
+    fetch(URL).then(res=> res.json()).then(res=>setarrayNFT(res)).finally(()=> setisLoading(false));
+  }
+
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <Text>jopa</Text>
-    </SafeAreaView>
+    <reactNative.SafeAreaView style={backgroundStyle}>
+      <reactNative.Text>jopa tvoya</reactNative.Text>
+      {/* <reactNative.FlatList
+        data={arrayNFT}
+        renderItem={itemR}
+    
+        onRefresh={getNFT}
+        refreshing={isLoading}
+      ></reactNative.FlatList> */}
+      {arrayNFT.map((item)=>{
+        return (
+          <reactNative.Text>{item.description}</reactNative.Text>
+
+        )
+      })}
+    
+    
+
+    </reactNative.SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = reactNative.StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
@@ -76,6 +102,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
+
   },
   sectionDescription: {
     marginTop: 8,
