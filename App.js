@@ -11,6 +11,7 @@ import * as reactNative from 'react-native';
 
 
 
+
 import {
   Colors,
   DebugInstructions,
@@ -18,35 +19,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { COLORS } from './constants';
+import HeaderNFT from './src/components/HeaderNFT';
+import NFTItem from './src/components/NFTItem';
 
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}) => {
-  const isDarkMode = reactNative.useColorScheme() === 'dark';
-  return (
-    <reactNative.View style={styles.sectionContainer}>
-      <reactNative.Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </reactNative.Text>
-      <reactNative.Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </reactNative.Text>
-    </reactNative.View>
-  );
-};
+
+
 
 const App = () => {
   const isDarkMode = reactNative.useColorScheme() === 'dark';
@@ -67,51 +46,32 @@ const App = () => {
   }
 
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+ 
 
   return (
-    <reactNative.SafeAreaView style={backgroundStyle}>
-      <reactNative.Text>jopa tvoya</reactNative.Text>
-      {/* <reactNative.FlatList
+    <reactNative.SafeAreaView style={{backgroundColor:COLORS.headerBackground}}>
+      <NFTItem/>
+      </reactNative.SafeAreaView>
+  );
+};
+
+const styles = reactNative.StyleSheet.create({
+
+
+});
+
+{/* <reactNative.FlatList
         data={arrayNFT}
         renderItem={itemR}
     
         onRefresh={getNFT}
         refreshing={isLoading}
       ></reactNative.FlatList> */}
-      {arrayNFT.map((item)=>{
+      {/* {arrayNFT.map((item)=>{
         return (
           <reactNative.Text>{item.description}</reactNative.Text>
 
         )
-      })}
-    
-    
-
-    </reactNative.SafeAreaView>
-  );
-};
-
-const styles = reactNative.StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+      })} */}
 
 export default App;
